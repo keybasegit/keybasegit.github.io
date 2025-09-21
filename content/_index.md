@@ -359,5 +359,185 @@ sections:
     design:
       # Choose how many columns the section has. Valid values: '1' or '2'.
       columns: '2' 
+  - block: resume-languages1 #In light theme the percentage isn't visible hence my contribution
+    content:
+      title: Languages
+      # Note: `username` refers to the user's folder name in `content/authors/`
+      username: admin
+  - block: testimonials-many
+    id: trust-indicators
+    content:
+      # Header Content
+      title: "Trusted by millions of users worldwide"
+      blue: "TESTIMONIALS or TEAM OF AUTHORS OF SITE"
+      text: "Join thousands of satisfied customers who trust our platform"
+      
+      # Customizable Rating System
+      stars: 5                    # Number of stars (1-5)
+      rating: "5.0"              # Rating score display
+      reviews: "10,000+"         # Review count
+      # user_count: REMOVED       # No more user badge
+      
+      # Profile Images with URLs
+      items:
+        - name: "Sarah Johnson"           # Used for alt text
+          image: "luis.jpg"              # From assets/media/
+          url: "https://twitter.com/sarah" # Optional: profile/social URL
+          external: true                  # Optional: opens in new tab
+          
+        - name: "Michael Chen"            # Used for alt text  
+          image: "luis.jpg"            # From assets/media/
+          url: "https://linkedin.com/in/michael"
+          external: true
+          
+        - name: "Emily Rodriguez"         # Used for alt text
+          image: "luis.jpg"              # From assets/media/
+          url: "/team/emily"              # Internal link (no external needed)
+          
+        - name: "David Kim"               # Used for alt text
+          image: "luis.jpg"              # From assets/media/
+          url: "https://github.com/david"
+          external: true
+          
+        - name: "Lisa Thompson"           # Used for alt text
+          image: "luis.jpg"               # From assets/media/
+          # url: not required             # Image won't be clickable
+  
+    design:
+      spacing:
+        padding: ["1rem", 0, 0, 0]
+  - block: witness
+    content:
+      title: "We have some fans."
+      text: "Words from real users and collaborators."
+
+      items:
+        - name: "Daniella Doe"
+          role: "Mobile Developer"
+          image: "avatar-copy.jpg"
+          quote: >
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum aliquid quo eum quae
+            quos illo earum ipsa doloribus nostrum minus libero…
+          button:
+            text: "LinkedIn"
+            url: "https://linkedin.com"
+          rating: 4
+        - name: "Daniella Doe"
+          role: "Mobile Developer"
+          image: "avatar-copy.jpg"
+          quote: >
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum aliquid quo eum quae
+            quos illo earum ipsa doloribus nostrum minus libero…
+          button:
+            text: "LinkedIn"
+            url: "https://linkedin.com"
+          rating: 4
+        - name: "Daniella Doe"
+          role: "Mobile Developer"
+          image: "avatar-copy.jpg"
+          quote: >
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum aliquid quo eum quae
+            quos illo earum ipsa doloribus nostrum minus libero…
+          button:
+            text: "LinkedIn"
+            url: "https://linkedin.com"
+          rating: 4
+        - name: "Jane Doe"
+          role: "Marketing"
+          image: "avatar-copy.jpg"
+          quote: >
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto laboriosam…
+          rating: 4
+  - block: pricing 
+    content:
+      title: "Choose Your Plan"
+      text: ""
+      blue: ""
+      items:
+      - name: "Starter"
+        icon: "custom/twitter"
+        description: "Perfect for individuals and small projects"
+        price: "$20"
+        period: "/month"
+        button:
+          text: "Get Started"
+          url: "#"
+          target: "_blank"
+        features:
+          - text: "10 users"
+            included: true
+          - text: "2GB of storage"
+            included: true
+          - text: "Email support"
+            included: true
+          - text: "Help center access"
+            included: false
+          - text: "Phone support"
+            included: false
+          - text: "Community access"
+            included: false
+      - name: "Pro"
+        icon: "star"
+        description: "Great for growing teams and businesses"
+        price: "$30"
+        period: "/month"
+        featured: true  # This adds the ring highlight
+        button:
+          text: "Get Started"
+          url: "#"
+        features:
+          - text: "20 users"
+            included: true
+          - text: "5GB of storage"
+            included: true
+          - text: "Email support"
+            included: true
+          - text: "20 users"
+            included: true
+          - text: "5GB of storage"
+            included: true
+          - text: "Email support"
+            included: true
+          - text: "Help center access"
+            included: true
+          - text: "Phone support"
+            included: false
+          - text: "Community access"
+            included: false 
+      - name: "Enterprise"
+        icon: "custom/twitter"
+        description: "For large organizations with advanced needs"
+        price: "$100"
+        period: "/month"
+        button:
+          text: "Contact Sales"
+          url: "#"
+        features:
+          - text: "50 users"
+            included: true
+          - text: "20GB of storage"
+            included: true
+          - text: "Email support"
+            included: true
+          - text: "Help center access"
+            included: true
+          - text: "Phone support"
+            included: true
+          - text: "Community access"
+            included: true
+          - text: "20GB of storage"
+            included: true
+          - text: "Email support"
+            included: true
+          - text: "Help center access"
+            included: true
+          - text: "Phone support"
+            included: true
+          - text: "Community access"
+            included: true
+    button:
+      text: "Need a custom plan?"
+      url: "/contact"
+  
   
 ---
