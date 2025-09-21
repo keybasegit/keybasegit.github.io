@@ -120,28 +120,28 @@
     {{ end }}
   </div>
 
-<!-- Enhanced Navigation Dots - Maximum visibility on light backgrounds -->
-{{ if gt $slide_count 1 }}
-<div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3">
-  {{ range $index, $item := $block.content.slides }}
-  <button type="button" 
-          class="w-5 h-5 rounded-lg transition-all duration-300 
-                 border-2 backdrop-blur-md shadow-xl
-                 {{ if eq $index 0 }}
-                   bg-white border-gray-900 shadow-gray-900/70
-                   ring-2 ring-gray-900/40 ring-offset-2 ring-offset-white/20
-                 {{ else }}
-                   bg-gray-900/70 border-white/80 shadow-black/60
-                   hover:bg-gray-900/90 hover:border-white 
-                   hover:shadow-black/80 hover:scale-125
-                   hover:ring-2 hover:ring-white/50
-                 {{ end }}" 
-          aria-current="{{ if eq $index 0 }}true{{ else }}false{{ end }}" 
-          aria-label="Slide {{ add $index 1 }}" 
-          data-carousel-slide-to="{{ $index }}"></button>
+  <!-- Enhanced Navigation Dots - Maximum visibility on light backgrounds -->
+  {{ if gt $slide_count 1 }}
+  <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3">
+    {{ range $index, $item := $block.content.slides }}
+    <button type="button" 
+            class="w-5 h-5 rounded-lg transition-all duration-300 
+                   border-2 backdrop-blur-md shadow-xl
+                   {{ if eq $index 0 }}
+                     bg-white border-gray-900 shadow-gray-900/70
+                     ring-2 ring-gray-900/40 ring-offset-2 ring-offset-white/20
+                   {{ else }}
+                     bg-gray-900/70 border-white/80 shadow-black/60
+                     hover:bg-gray-900/90 hover:border-white 
+                     hover:shadow-black/80 hover:scale-125
+                     hover:ring-2 hover:ring-white/50
+                   {{ end }}" 
+            aria-current="{{ if eq $index 0 }}true{{ else }}false{{ end }}" 
+            aria-label="Slide {{ add $index 1 }}" 
+            data-carousel-slide-to="{{ $index }}"></button>
+    {{ end }}
+  </div>
   {{ end }}
-</div>
-{{ end }}
 
   <!-- Navigation controls - Enhanced visibility for all backgrounds -->
   {{ if gt $slide_count 1 }}
@@ -183,7 +183,7 @@
 
 </div>
 
-{{/* Enhanced Carousel JavaScript */}}
+{{/* Fixed Carousel JavaScript with proper autoplay configuration */}}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const carousel = document.getElementById('{{ $hash_id }}');
@@ -216,12 +216,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update indicators
     indicators.forEach((indicator, i) => {
       if (i === index) {
-        indicator.classList.remove('bg-opacity-30');
-        indicator.classList.add('bg-white');
+        indicator.classList.remove('bg-gray-900/70', 'border-white/80');
+        indicator.classList.add('bg-white', 'border-gray-900');
         indicator.setAttribute('aria-current', 'true');
       } else {
-        indicator.classList.add('bg-opacity-30');
-        indicator.classList.remove('bg-white');
+        indicator.classList.add('bg-gray-900/70', 'border-white/80');
+        indicator.classList.remove('bg-white', 'border-gray-900');
         indicator.setAttribute('aria-current', 'false');
       }
     });
@@ -263,10 +263,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Auto-play functionality (if enabled)
-  {{ if $block.design.autoplay }}
+  // Auto-play functionality - Fixed to use your YAML configuration
+  {{ $autoplay := $block.design.loop | default false }}
+  {{ $interval := $block.design.interval | default 5000 }}
+  {{ if $autoplay }}
   function startAutoplay() {
-    autoplayInterval = setInterval(nextSlide, {{ $block.design.autoplay_interval | default 5000 }});
+    autoplayInterval = setInterval(nextSlide, {{ $interval }});
   }
   
   function stopAutoplay() {
@@ -294,11 +296,11 @@ document.addEventListener('DOMContentLoaded', function() {
       if (e.key === 'ArrowLeft') {
         e.preventDefault();
         prevSlide();
-        {{ if $block.design.autoplay }}resetAutoplay();{{ end }}
+        {{ if $autoplay }}resetAutoplay();{{ end }}
       } else if (e.key === 'ArrowRight') {
         e.preventDefault();
         nextSlide();
-        {{ if $block.design.autoplay }}resetAutoplay();{{ end }}
+        {{ if $autoplay }}resetAutoplay();{{ end }}
       }
     }
   });
@@ -309,14 +311,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
   carousel.addEventListener('touchstart', (e) => {
     startX = e.touches[0].clientX;
-    startY = e.touches.clientY;
+    startY = e.touches[0].clientY;
   });
   
   carousel.addEventListener('touchend', (e) => {
     if (!startX || !startY) return;
     
-    const endX = e.changedTouches.clientX;
-    const endY = e.changedTouches.clientY;
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
     
     const diffX = startX - endX;
     const diffY = startY - endY;
@@ -328,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         prevSlide();
       }
-      {{ if $block.design.autoplay }}resetAutoplay();{{ end }}
+      {{ if $autoplay }}resetAutoplay();{{ end }}
     }
     
     startX = 0;

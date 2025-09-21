@@ -151,7 +151,7 @@ sections:
     content:
       title: 
       # Choose which groups/teams of users to display.
-      #   Edit `user_groups` in each user's profile to add them to one or more of these groups.
+      #   Edit `user_groups` in each user's profile to add them to one or more of these groups. Unfortunately with recent redesign in hugoblox authors can't be displayed as https://page/authors 
       text: ""
       user_groups:
         - Admin
@@ -257,9 +257,8 @@ sections:
       # Make the slides full screen within the browser window?
       is_fullscreen: true
       # Automatically transition through slides?
-      loop: false
-      # Duration of transition between slides (in ms)
-      interval: 2000
+      loop: true        # This enables autoplay
+      interval: 2000    # This sets 2-second intervals
   - block: tabs
     content:
       title: "CONFERENCE"
