@@ -96,7 +96,7 @@ sections:
       order: desc
     design:
       # Choose a layout view
-      view: card
+      view: article-grid
       # Reduce spacing
       spacing:
         padding: [0, 0, 0, 0]
@@ -120,4 +120,245 @@ sections:
         # Card background color (CSS class)
         css_class: 'bg-primary-700'
         css_style: ''
+  - block: portfolio
+    id: portfolio
+    content:
+      title: 'Blog Portfolio'
+      text: 'Explore articles by categories'
+      filters:
+        folders:
+          - post
+      count: 0
+    design:
+      view: article-grid
+      columns: '3'
+      filter_button: true
+      # Choose categories or tags
+      filter_type: "tags"  # or "tags"
+      # Specify which ones to show
+      filter_items: ["Academic", "Markdown", "Hugo-Blox"]
+      # Custom label
+      filter_label: "Topics"
+      # Limit posts shown per filter (0 = no limit)
+      max_posts_per_filter: 6  # ← Add this line
+      show_date: true
+      show_read_more: true
+      hide_author: true      # Hide author (below description) - DEFAULT TRUE
+      hide_tags: true        # Hide tags (above title) - DEFAULT TRUE  
+      hide_categories: false # Show categories - DEFAULT FALSE
+  - block: people
+    id: speakers
+    content:
+      title: 
+      # Choose which groups/teams of users to display.
+      #   Edit `user_groups` in each user's profile to add them to one or more of these groups.
+      text: ""
+      user_groups:
+        - Admin
+        - Trustees
+        - Volunteers
+      sort_by: Params.last_name
+      sort_ascending: true
+    design:
+      # Show user's social networking links? (true/false)
+      show_social: true
+      # Show user's interests? (true/false)
+      show_interests: false
+      # Show user's role?
+      show_role: false
+      # Show user's organizations/affiliations?
+      show_organizations: false
+
+  - block: publication
+    id: publications
+    content:
+      title: 'Publications'
+      text: 'Browse and search through our research publications'
+      count: 0
+    design:
+      view: citation
+      show_numbering: true
+    advanced:
+      css_style: ""
+      css_class: ""
+  - block: tag-cloud
+    content:
+      title: My title
+      subtitle: My subtitle
+      text: TAG CLOUD
+      # Choose a taxonomy from the `taxonomies` list in `config.yaml` to display (e.g. tags, categories, authors)
+      taxonomy: tags
+      # Choose how many tags you would like to display (0 = all tags)
+      count: 20
+    design:
+      # Minimum and maximum font sizes (1.0 = 100%).
+      font_size_min: 0.7
+      font_size_max: 2.0
+  - block: markdown
+    content:
+      title: 'Photo Gallery'
+      subtitle: 'Explore our collection'
+      text: |
+        {{< gallery folder="media/gallery" gap="0" rounded="xl" columns="3" lightbox="true" >}}
+    design:
+      columns: '1'
+      background:
+        color: ''
+        text_color_light: false
+      spacing:
+        padding: ['20px', '0', '20px', '0']
+  - block: slider
+    content:
+      slides:
+        - title: 👋 Welcome to the group
+          content: Take a look at what we're working on...
+          align: center
+          background:
+            image:
+              # Specify an image from `assets/media/`
+              # or delete the image section to remove it
+              filename: coders.jpg
+              filters:
+                brightness: 0.7
+            position: right
+            color: '#666'
+        - title: Lunch & Learn ☕️
+          content: 'Share your knowledge with the group and explore exciting new topics together!'
+          align: left
+          background:
+            image:
+              # Specify an image from `assets/media/`
+              # or delete the image section to remove it
+              filename: welcome.jpg
+              filters:
+                brightness: 0.7
+            position: center
+            color: '#555'
+        - title: World-Class Semiconductor Lab
+          content: 'Just opened last month!'
+          align: right
+          background:
+            image:
+              # Specify an image from `assets/media/`
+              # or delete the image section to remove it
+              filename: contact.jpg
+              filters:
+                brightness: 0.5
+            position: center
+            color: '#333'
+          link:
+            icon: graduation-cap
+            icon_pack: fas
+            text: Join Us
+            url: ../contact/
+    design:
+      # Slide height is automatic unless you force a specific height (e.g. '400px')
+      slide_height: ''
+      # Make the slides full screen within the browser window?
+      is_fullscreen: true
+      # Automatically transition through slides?
+      loop: false
+      # Duration of transition between slides (in ms)
+      interval: 2000
+  - block: tabs
+    content:
+      title: "CONFERENCE"
+      blue: ""
+      text: ""
+      tabs:
+        - title: "Day 1"
+          icon: "/devicon/git"    # corresponds to assets/icons/custom/profile.svg
+          content: "csv:data/conference-day1.csv" #assets/data/xxx.csv
+        - title: "Day 2"
+          content: "csv:data/conference-day2.csv"
+          iconFile: "anatomical-heart"
+        - title: "Day 3"
+          content: "csv:data/conference-day3.csv"
+        - title: "Venue & Info"
+          content: |
+           **Conference Venue:** Charity Excellence Center
+        
+           **Address:** 123 Philanthropy Avenue, Community District
+           
+           **Facilities:**
+           - Free WiFi throughout venue
+           - Accessibility features available
+           - Parking: Complimentary for attendees
+           - Childcare: Available upon request
+           
+           **Contact:**
+           - Phone: (555) 123-CONF
+           - Email: info@charityconference.org
+           
+           **Download Conference Program:**
+           - <span><a href="/data/conference-day1.csv" download="conference-day1.csv">Day 1.csv</a></span>
+  - block: cta-image-par-left
+    content:
+      title: "Our Services"
+      text: ""
+      items:
+        - title: "Building on modern foundations"
+          text: "Gain a competitive advantage by incorporating industry leading practices"
+          image: "avatar copy.jpg"
+          image_url: https://google.com
+          layout: "text-left"  # NEW: Text left, image right
+          overlay_text: "MODERN WORKSPACE"  # NEW: Text overlay for image
+          features:
+            - name: "Built on top of Astro 5.0"
+              description: "Benefiting from the performance and developer-friendly features of this modern static site generator."
+              icon: "check"
+            - name: "Styled using Tailwind CSS"
+              description: "Facilitating rapid design and consistent styling with this highly popular utility-first CSS framework."
+              icon: "check"
+            - name: "Cross-browser compatibility"
+              description: "Ensure your website looks and functions consistently across various web browsers, delivering a seamless experience to all users."
+              icon: "check"
+          button:
+            text: "Get Started"
+            url: "/contact"
+    design:
+      # Section background color (CSS class)
+      css_class: "bg-gray-100 dark:bg-gray-900"
+  - block: contact
+    id: contact
+    content: #You need to 
+      title: Contact
+      text: 
+      text_cta: 
+      text_privacy:  I consent to having this website store my submitted information so they can respond to my inquiry. Check <a href="/privacy" class="underline">privacy policy.</a> You must agree before submitting.
+      access_key: "7dadb6fb-c78b-4409-bf0d-2033a9904b15" #Visit https://web3forms.com/ for free access key (To my knowledge this service is GDPR complient), 
+      redirect_url: "https://yoursite.com/thank-you/"  # Create page for users to see after submitting contact request
+      email: test@example.org
+      phone: 888 888 88 88
+      appointment_url: 'https://calendly.com'
+      address:
+        street: 450 Serra Mall
+        city: Stanford
+        region: CA
+        postcode: '94305'
+        country: United States
+        country_code: US
+      directions: Enter Building 1 and take the stairs to Office 200 on Floor 2
+      office_hours:
+        - 'Monday 10:00 to 13:00'
+        - 'Wednesday 09:00 to 10:00'
+      contact_links:
+        - icon: twitter
+          icon_pack: fab
+          name: DM Me
+          link: 'https://twitter.com/Twitter'
+        - icon: skype
+          icon_pack: fab
+          name: Skype Me
+          link: 'skype:echo123?call'
+        - icon: video
+          icon_pack: fas
+          name: Zoom Me
+          link: 'https://zoom.com'
+      # Automatically link email and phone or display them just as text?
+      autolink: true
+    design:
+      # Choose how many columns the section has. Valid values: '1' or '2'.
+      columns: '2' 
+  
 ---

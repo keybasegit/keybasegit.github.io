@@ -1,0 +1,77 @@
+{{- $folder   := .Get "folder" -}}
+{{- $lightbox := .Get "lightbox" | default "true" -}}
+{{- $rounded  := .Get "rounded"  | default "lg" -}}
+{{- $quality  := .Get "quality"  | default "70" -}}
+{{- $id       := delimit (slice "gallery" (now.Unix | string)) "-" -}}
+
+{{- $images := resources.Match (printf "%s/*.{jpg,jpeg,webp,png,gif,svg}" $folder) -}}
+{{- if $images -}}
+  {{- if eq $lightbox "true" -}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+  {{- end -}}
+
+  <style>
+  .gallery-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: -1px;
+    padding: 0;
+  }
+  .gallery-item {
+    flex: 0 0 auto;
+    margin: 1px;
+    padding: 0;
+    line-height: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .gallery-row {
+      justify-content: center;
+      gap: 0.25rem;
+    }
+  }
+  </style>
+
+  <div class="gallery-row mb-6 mx-auto max-w-6xl">
+    {{- range $images -}}
+      {{- $thumb := .Fit (printf "300x200 q%s webp"  $quality) -}}
+      {{- $large := .Fit (printf "1200x800 q%s webp" $quality) -}}
+      
+      <div class="gallery-item">
+        {{- if eq $lightbox "true" -}}
+          <a href="{{ $large.RelPermalink }}" data-gallery="{{ $id }}" data-title="{{ .Name | plainify }}">
+        {{- end -}}
+        
+        <img src="{{ $thumb.RelPermalink }}" alt="{{ .Name | plainify }}" class="w-24 h-24 object-cover rounded-{{ $rounded }}{{ if eq $lightbox "true" }} cursor-pointer{{ end }}" loading="lazy" style="display: block; margin: 0; padding: 0;">
+        
+        {{- if eq $lightbox "true" -}}
+          </a>
+        {{- end -}}
+      </div>
+    {{- end -}}
+  </div>
+
+  {{- if eq $lightbox "true" -}}
+    <script>
+    document.addEventListener('DOMContentLoaded', () =>
+      GLightbox({
+        selector: '[data-gallery="{{ $id }}"]',
+        touchNavigation: true,
+        loop: true,
+        zoomable: true,
+        draggable: true,
+        openEffect: 'fade',
+        closeEffect: 'fade'
+      })
+    );
+    </script>
+  {{- end -}}
+{{- else -}}
+  <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg mb-4">
+    <p class="text-sm font-medium text-yellow-700">Gallery notice</p>
+    <p class="text-sm text-yellow-600">No images found in folder: <code>{{ $folder }}</code></p>
+  </div>
+{{- end -}}

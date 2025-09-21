@@ -1,0 +1,167 @@
+{{/* Publication Card Template */}}
+{{ $item := .item }}
+{{ $index := .index }}
+{{ $show_numbering := .show_numbering }}
+{{ $view := .view | default "citation" }}
+
+{{ $pub_type_names := dict 
+    "0" "Uncategorized"
+    "1" "Conference Paper"
+    "2" "Journal Article"  
+    "3" "Preprint"
+    "4" "Report"
+    "5" "Book"
+    "6" "Book Chapter"
+    "7" "Thesis"
+    "8" "Patent"
+}}
+
+<div class="publication-card bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-200 dark:border-gray-700 p-6">
+  
+  {{/* Publication Number */}}
+  {{ if $show_numbering }}
+  <div class="flex items-start gap-4">
+    <div class="flex-shrink-0 w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
+      {{ $index }}
+    </div>
+    <div class="flex-grow">
+  {{ else }}
+  <div>
+  {{ end }}
+  
+  {{/* Publication Type Badge */}}
+  {{ with $item.Params.publication_types }}
+    {{ range first 1 . }}
+      {{ $type_name := index $pub_type_names . | default . }}
+      <span class="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-full dark:bg-primary-900 dark:text-primary-300 mb-3">
+        {{ $type_name }}
+      </span>
+    {{ end }}
+  {{ end }}
+  
+  {{/* Title */}}
+  <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+    <a href="{{ $item.RelPermalink }}" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">
+      {{ $item.Title }}
+    </a>
+  </h3>
+  
+  {{/* Authors */}}
+  {{ with $item.Params.authors }}
+  <div class="text-gray-700 dark:text-gray-300 mb-3">
+    {{ $authors := . }}
+    {{ range $i, $author := $authors }}
+      {{ if ne $i 0 }}, {{ end }}
+      <span class="author">{{ $author }}</span>
+    {{ end }}
+  </div>
+  {{ end }}
+  
+  {{/* Publication Details */}}
+  <div class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+    {{ with $item.Params.publication }}
+      <span class="italic">{{ . }}</span>
+    {{ end }}
+    
+    {{ if and $item.Params.publication $item.Date }}
+      <span class="mx-2">•</span>
+    {{ end }}
+    
+    {{ if $item.Date }}
+      <time datetime="{{ $item.Date.Format "2006-01-02" }}">
+        {{ $item.Date.Format "2006" }}
+      </time>
+    {{ end }}
+  </div>
+  
+  {{/* Summary */}}
+  {{ if $item.Summary }}
+  <p class="text-gray-700 dark:text-gray-300 mb-4 line-clamp-3">
+    {{ $item.Summary }}
+  </p>
+  {{ end }}
+  
+  {{/* Links */}}
+  <div class="flex flex-wrap gap-2">
+    {{/* PDF Link */}}
+    {{ with $item.Params.url_pdf }}
+    <a href="{{ . }}" target="_blank" rel="noopener"
+       class="inline-flex items-center px-3 py-1 text-sm font-medium text-red-600 bg-red-50 rounded-full hover:bg-red-100 dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-800 transition-colors duration-200">
+      <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+      </svg>
+      PDF
+    </a>
+    {{ end }}
+    
+    {{/* Code Link */}}
+    {{ with $item.Params.url_code }}
+    <a href="{{ . }}" target="_blank" rel="noopener"
+       class="inline-flex items-center px-3 py-1 text-sm font-medium text-gray-600 bg-gray-50 rounded-full hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors duration-200">
+      <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+      </svg>
+      Code
+    </a>
+    {{ end }}
+    
+    {{/* Dataset Link */}}
+    {{ with $item.Params.url_dataset }}
+    <a href="{{ . }}" target="_blank" rel="noopener"
+       class="inline-flex items-center px-3 py-1 text-sm font-medium text-green-600 bg-green-50 rounded-full hover:bg-green-100 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800 transition-colors duration-200">
+      <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+      </svg>
+      Dataset
+    </a>
+    {{ end }}
+    
+    {{/* Project Link */}}
+    {{ with $item.Params.url_project }}
+    <a href="{{ . }}" target="_blank" rel="noopener"
+       class="inline-flex items-center px-3 py-1 text-sm font-medium text-blue-600 bg-blue-50 rounded-full hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800 transition-colors duration-200">
+      <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+      </svg>
+      Project
+    </a>
+    {{ end }}
+    
+    {{/* Slides Link */}}
+    {{ with $item.Params.url_slides }}
+    <a href="{{ . }}" target="_blank" rel="noopener"
+       class="inline-flex items-center px-3 py-1 text-sm font-medium text-purple-600 bg-purple-50 rounded-full hover:bg-purple-100 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800 transition-colors duration-200">
+      <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+      </svg>
+      Slides
+    </a>
+    {{ end }}
+    
+    {{/* DOI Link */}}
+    {{ with $item.Params.doi }}
+    <a href="https://doi.org/{{ . }}" target="_blank" rel="noopener"
+       class="inline-flex items-center px-3 py-1 text-sm font-medium text-orange-600 bg-orange-50 rounded-full hover:bg-orange-100 dark:bg-orange-900 dark:text-orange-300 dark:hover:bg-orange-800 transition-colors duration-200">
+      <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+      </svg>
+      DOI
+    </a>
+    {{ end }}
+    
+    {{/* Details Link */}}
+    <a href="{{ $item.RelPermalink }}"
+       class="inline-flex items-center px-3 py-1 text-sm font-medium text-primary-600 bg-primary-50 rounded-full hover:bg-primary-100 dark:bg-primary-900 dark:text-primary-300 dark:hover:bg-primary-800 transition-colors duration-200">
+      <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832L12 11.202a1 1 0 000-1.404l-2.445-1.63z" clip-rule="evenodd" />
+      </svg>
+      Details
+    </a>
+  </div>
+  
+  {{ if $show_numbering }}
+    </div>
+  </div>
+  {{ end }}
+  
+</div>
