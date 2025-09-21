@@ -217,7 +217,7 @@
         {{/* Button */}}
         {{ with $item.button }}
         <div class="mt-10">
-          <a href="{{ .url }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white border border-primary-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-900 transition-all duration-200" style="line-height: 1.2;">
+          <a href="{{ .url }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white dark:text-gray-900 border-primary-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-900 transition-all duration-200" style="line-height: 1.2;">
             <span class="flex items-center">
               {{ .text }}
               <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="margin-top: 1px; flex-shrink: 0;">
@@ -253,7 +253,7 @@
               {{ with $item.overlay_text }}
               <div class="absolute bottom-0 left-0 overlay-bg-light dark:overlay-bg-dark rounded-lg"
                    style="padding: 1rem; margin: 1.5rem; pointer-events: none;">
-                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+                <h2 class="text-3xl font-bold text-gray-900">
                   {{ . | $page.RenderString }}
                 </h2>
               </div>
