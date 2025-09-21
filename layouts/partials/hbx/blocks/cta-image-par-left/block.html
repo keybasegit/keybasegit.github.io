@@ -10,36 +10,6 @@
 {{ $blue := $block.content.blue | emojify | $page.RenderString }}
 
 <style>
-  /* All existing styles remain the same */
-  .markdown-content a {
-    color: rgb(185 28 28);
-    text-decoration: underline;
-    transition: opacity 0.2s ease-in-out;
-  }
-  
-  .markdown-content a:hover {
-    opacity: 0.8;
-  }
-  
-  .dark .markdown-content a {
-    color: rgb(253 164 175);
-  }
-  
-  .content-text a {
-    color: rgb(185 28 28);
-    text-decoration: underline;
-    font-weight: 500;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  .content-text a:hover {
-    opacity: 0.8;
-  }
-  
-  .dark .content-text a {
-    color: rgb(253 164 175);
-  }
-  
   .feature-icon {
     display: inline-flex;
     align-items: center;
